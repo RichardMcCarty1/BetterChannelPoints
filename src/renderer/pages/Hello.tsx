@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import Button from '@mui/material/Button';
-import icon from '../../assets/icon.svg';
-import { themeOptions } from './theme/theme';
+import icon from '../../../assets/icon.svg';
+import { themeOptions } from '../theme/theme';
 
 const Hello = () => {
   const navigate = useNavigate();

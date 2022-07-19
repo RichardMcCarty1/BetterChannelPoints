@@ -11,24 +11,26 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import { ArrowBack } from '@mui/icons-material';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { themeOptions } from '../theme/theme';
 
 const drawerWidth = 240;
 
+interface WrapperProps {
+  children: JSX.Element | null,
+  tab:  React.Dispatch<React.SetStateAction<string>>
+}
 
-
-export const Wrapper = ({ children, tab }): ReactElement => {
+export const Wrapper = ({ children, tab }: WrapperProps ): ReactElement => {
   const navigate = useNavigate();
 
   const backFunction = () => {
     navigate('/');
-  }
+  };
 
   return (
     <ThemeProvider theme={themeOptions}>
@@ -43,8 +45,8 @@ export const Wrapper = ({ children, tab }): ReactElement => {
           }}>
             <Toolbar>
               <Typography variant="h6" noWrap component="div">
-                <IconButton>
-                  <ArrowBack onClick={backFunction} style={{ color: '#fff' }} />
+                <IconButton onClick={backFunction}>
+                  <ArrowBack style={{ color: '#fff' }} />
                 </IconButton>
               </Typography>
             </Toolbar>
@@ -60,22 +62,22 @@ export const Wrapper = ({ children, tab }): ReactElement => {
             <Toolbar />
             <Box sx={{ overflow: 'auto' }}>
               <List>
-                  <ListItem key="Audio" disablePadding >
-                    <ListItemButton onClick={() => tab('audio')}>
-                      <ListItemIcon>
-                        <InboxIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Audio" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem key="HTTP Wrapper" disablePadding >
-                    <ListItemButton onClick={() => tab('http')}>
-                      <ListItemIcon>
-                        <InboxIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="HTTP Wrapper" />
-                    </ListItemButton>
-                  </ListItem>
+                <ListItem key="Audio" disablePadding>
+                  <ListItemButton onClick={() => tab('audio')}>
+                    <ListItemIcon>
+                      <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Audio" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem key="HTTP Wrapper" disablePadding>
+                  <ListItemButton onClick={() => tab('http')}>
+                    <ListItemIcon>
+                      <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="HTTP Wrapper" />
+                  </ListItemButton>
+                </ListItem>
               </List>
               <Divider />
             </Box>
