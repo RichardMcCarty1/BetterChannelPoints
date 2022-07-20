@@ -13,9 +13,11 @@ const Dashboard = () => {
   const [selectedRedemption, setSelectedRedemption] = useState('');
   const [listingVisible, setListingVisible] = useState(false);
   const [mapping, setMapState] = useState((window.electron.store.get('map') ? window.electron.store.get('map') : {}));
+
   const navigate = useNavigate();
   const location = useLocation();
   const token = (location.state as Record<string, string>).token
+
   let firstPass = true;
   let ws: WebSocket;
 
@@ -31,7 +33,7 @@ const Dashboard = () => {
     })
   }
 
-  const generateSocket = () => {
+  const generateSocket = (redemptions) => {
     const heartbeatTimer = 240000;
     const reconnectTimer = 3000;
     let heartbeatHandle: NodeJS.Timer;
@@ -59,6 +61,7 @@ const Dashboard = () => {
       }else if (message.type !== 'PONG' && message.type !== "RESPONSE") {
         const reward = JSON.parse(message.data.message).data.redemption.reward.title;
         window.electron.ipcRenderer.sendMessage('playsound', [reward]);
+        window.electron.ipcRenderer.sendMessage('axiosExec', [reward, redemptions]);
       }
 
     }
@@ -82,7 +85,7 @@ const Dashboard = () => {
          window.electron.store.set('uid', response.data.data[0].id);
          getChannelRedemptions(token, response.data.data[0].id).then((innerResponse) => {
              setRedemptions(innerResponse.data.data);
-             generateSocket();
+             generateSocket(innerResponse.data.data);
          })
        }
      });
@@ -101,7 +104,9 @@ const Dashboard = () => {
               channelRedemptions={channelRedemptions}
             />
             : (currentTab === 'http' ?
-              <Http />
+              <Http
+                channelRedemptions={channelRedemptions}
+              />
             : null
           )}
         </Wrapper>

@@ -85,11 +85,31 @@ ipcMain.on('ipc-example', async (event, arg) => {
 
 ipcMain.on('playsound', async (event, args) => {
   const map = <Record<string, string>> store.get('map', {});
-
   if (map[args[0]]) {
     sound.play(map[args[0]]).then(() => {
       event.reply('playsound', 'done')
     })
+  }
+});
+
+ipcMain.on('axiosExec', async (event, args) => {
+  const wrapperMapPre = <Record<string, string>> store.get('wrapperMap', {})
+  const wrapperMap = wrapperMapPre[args[0]];
+  let found = false;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const redemption of args[1]) {
+    if (redemption.title === args[0]) {
+      found = true;
+      break;
+    }
+  }
+  if(wrapperMap && found) {
+    const response = await (wrapperMap[2] ? axiosWrapper(wrapperMap[0], wrapperMap[1], wrapperMap[2]) : axiosWrapper(wrapperMap[0], wrapperMap[1]));
+    event.reply('axiosExecute', {
+      status: response.status,
+      text: response.statusText,
+      data: response.data,
+    });
   }
 });
 
@@ -109,6 +129,13 @@ ipcMain.on('importfile', async (event, args) => {
     }
   })
 })
+
+ipcMain.on('axiosWrapper', async (event, args) => {
+  const wrapperMap = <Record<string, string>> store.get('wrapperMap', {})
+  wrapperMap[args[4]] = args;
+  store.set('wrapperMap', wrapperMap)
+});
+
 // Generate Auth Token via Implicit Grant, store returned token in store, kill window
 const generateAuthToken = async (event?: IpcMainEvent) => {
   authWindow = new BrowserWindow({
@@ -149,15 +176,6 @@ const generateAuthToken = async (event?: IpcMainEvent) => {
 ipcMain.on('oauth-implicit', async (event) => {
   await generateAuthToken(event);
   setInterval(validateToken, 3000000);
-});
-
-ipcMain.on('axiosWrapper', async (event, args) => {
-  const response = await (args[2] ? axiosWrapper(args[0], args[1], args[2]) : axiosWrapper(args[0], args[1]));
-  event.reply('axiosWrapper', {
-    status: response.status,
-    text: response.statusText,
-    data: response.data,
-  });
 });
 
 if (process.env.NODE_ENV === 'production') {
