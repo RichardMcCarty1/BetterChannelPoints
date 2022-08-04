@@ -30,7 +30,6 @@ import { axiosWrapper } from '../renderer/api/getUserId';
 const store = new Store();
 const dialog = require('electron').dialog;
 
-console.log(app.getPath('userData'))
 ipcMain.on('electron-store-get', async (event, val) => {
   event.returnValue = store.get(val);
 });
@@ -87,6 +86,7 @@ ipcMain.on('playsound', async (event, args) => {
   const map = <Record<string, string>> store.get('map', {});
   if (map[args[0]]) {
     sound.play(map[args[0]]).then(() => {
+      console.log(map[args[0]]);
       event.reply('playsound', 'done')
     })
   }

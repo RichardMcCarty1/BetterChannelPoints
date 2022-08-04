@@ -113,6 +113,8 @@
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.0",
+    "audio-loader": "^1.0.3",
+    "audio-play": "^2.3.1",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
     "electron-store": "^8.0.2",
