@@ -132,7 +132,7 @@ ipcMain.on('importfile', async (event, args) => {
   })
 })
 
-ipcMain.on('axiosWrapper', async (event, args) => {
+ipcMain.on('axiosWrapper', async (_, args) => {
   const wrapperMap = <Record<string, string>> store.get('wrapperMap', {})
   wrapperMap[args[4]] = args;
   store.set('wrapperMap', wrapperMap)

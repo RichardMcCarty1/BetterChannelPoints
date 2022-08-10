@@ -34,7 +34,8 @@ const Dashboard = () => {
     })
   }
 
-  const generateSocket = (redemptions) => {
+  const generateSocket = (redemptions: Record<string, string>[]) => {
+
     const heartbeatTimer = 240000;
     const reconnectTimer = 3000;
     let heartbeatHandle: NodeJS.Timer;
