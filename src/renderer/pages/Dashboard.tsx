@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [selectedRedemption, setSelectedRedemption] = useState('');
   const [listingVisible, setListingVisible] = useState(false);
   const [mapping, setMapState] = useState((window.electron.store.get('map') ? window.electron.store.get('map') : {}));
+  const [httpMap, setHTTPMap] = useState(window.electron.store.get('wrapperMap') ? window.electron.store.get('wrapperMap') : {});
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -105,6 +106,7 @@ const Dashboard = () => {
             />
             : (currentTab === 'http' ?
               <Http
+                mapState={{ httpMap, setHTTPMap }}
                 channelRedemptions={channelRedemptions}
               />
             : null

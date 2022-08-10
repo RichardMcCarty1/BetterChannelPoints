@@ -103,6 +103,7 @@ ipcMain.on('axiosExec', async (event, args) => {
       break;
     }
   }
+
   if(wrapperMap && found) {
     const response = await (wrapperMap[2] ? axiosWrapper(wrapperMap[0], wrapperMap[1], wrapperMap[2]) : axiosWrapper(wrapperMap[0], wrapperMap[1]));
     event.reply('axiosExecute', {
@@ -110,6 +111,7 @@ ipcMain.on('axiosExec', async (event, args) => {
       text: response.statusText,
       data: response.data,
     });
+    console.log(`\n\n RESPONSE STATUS CODE: ${response.status} \n\n RESPONSE STATUS TEXT: ${response.statusText} \n\n RESPONSE DATA: ${response.data}`)
   }
 });
 

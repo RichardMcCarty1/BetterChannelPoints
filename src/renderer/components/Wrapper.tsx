@@ -10,8 +10,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import IconButton from '@mui/material/IconButton';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import HttpIcon from '@mui/icons-material/Http';
 import { ArrowBack } from '@mui/icons-material';
 import React, { ReactElement } from 'react';
 import { ThemeProvider } from '@mui/material';
@@ -65,7 +66,7 @@ export const Wrapper = ({ children, tab }: WrapperProps ): ReactElement => {
                 <ListItem key="Audio" disablePadding>
                   <ListItemButton onClick={() => tab('audio')}>
                     <ListItemIcon>
-                      <InboxIcon />
+                      <LibraryMusicIcon />
                     </ListItemIcon>
                     <ListItemText primary="Audio" />
                   </ListItemButton>
@@ -73,7 +74,7 @@ export const Wrapper = ({ children, tab }: WrapperProps ): ReactElement => {
                 <ListItem key="HTTP Wrapper" disablePadding>
                   <ListItemButton onClick={() => tab('http')}>
                     <ListItemIcon>
-                      <InboxIcon />
+                      <HttpIcon />
                     </ListItemIcon>
                     <ListItemText primary="HTTP Wrapper" />
                   </ListItemButton>
